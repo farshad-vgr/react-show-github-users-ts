@@ -1,0 +1,17 @@
+#scroll-line {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 10px;
+  z-index: 1;
+  background-color: deepskyblue;
+}
+
+#scroll-line span {
+  float: right;
+  padding: 0 5px;
+  height: 10px;
+  font-size: 10px;
+  color: whitesmoke;
+  background-color: dodgerblue;
+}

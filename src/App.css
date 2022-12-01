@@ -1,38 +1,122 @@
-.App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+section {
   display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+}
+
+section ul {
+  padding: 20px;
+  width: 100%;
+  list-style: none;
+  background-color: gray;
+}
+
+section ul li {
+  position: relative;
+  width: 70%;
+  height: 120px;
+  margin: 10px auto;
+  padding: 10px 10px;
+  border: 1px solid whitesmoke;
+  border-radius: 5px 30px 30px 30px;
+  background-color: lightgray;
+  overflow: hidden;
+}
+section ul li.dragging {
+  opacity: 0.3 !important;
+}
+
+section ul li div {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  gap: 5px;
+}
+
+section ul li img {
+  width: 100px;
+  height: 100px;
+  border: 2px dashed gray;
+  border-radius: 5px;
+}
+
+section ul li section {
+  display: flex;
+  flex-direction: column;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  align-items: flex-start;
+  text-align: center;
+  flex-grow: 0.5;
+  width: 100px;
+  height: 100px;
 }
 
-.App-link {
-  color: #61dafb;
+section ul li section h3 {
+  padding: 5px;
+  font-size: 24px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+section ul li section a {
+  padding: 5px;
+  font-size: 16px;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+section ul li section span {
+  padding: 5px;
+  font-size: 16px;
+}
+
+section ul li article {
+  padding: 10px;
+  align-self: baseline;
+  text-align: justify;
+  line-height: 1.5rem;
+  width: 60%;
+  height: 100px;
+}
+
+section ul li .delete-icon {
+  position: absolute;
+  top: -1px;
+  right: 0px;
+  width: 30px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  font-family: sans-serif;
+  font-size: 14px;
+  font-weight: bold;
+  color: red;
+  background-color: whitesmoke;
+  border-radius: 0 0 0 30px;
+  cursor: pointer;
+  transition: 0.3s ease-in-out;
+}
+section ul li .delete-icon:hover {
+  background-color: lightgray;
+}
+
+/* ------------animation part----------- */
+.fade-item {
+  opacity: 0;
+  transition: 1s all ease-in-out;
+}
+
+.fadein {
+  animation: fadeIn 1s 1;
+  animation-fill-mode: forwards;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
   }
-  to {
-    transform: rotate(360deg);
+  100% {
+    opacity: 1;
   }
 }
