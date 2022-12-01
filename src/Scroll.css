@@ -9,7 +9,8 @@
 
 #scroll-line span {
   float: right;
-  padding: 0 5px;
+  padding: 0 3px;
+  min-width: 30px;
   height: 10px;
   font-size: 10px;
   color: whitesmoke;

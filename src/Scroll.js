@@ -2,19 +2,12 @@ import { useState, useEffect } from "react";
 import "./Scroll.css";
 
 function Scroll() {
-  const [percentScrolled, setPercentScrolled] = useState(0);
-  const [percentageText, setPercentText] = useState("");
-  const [scrollVisibility, setScrollVisibility] = useState("");
+  const [percentScrolled, setPercentScrolled] = useState((window.scrollY / (document.body.clientHeight - window.innerHeight)) * 100);
+  const [percentageText, setPercentText] = useState(percentScrolled.toFixed(1) + " %");
 
   const scrollHandler = () => {
     setPercentScrolled((window.scrollY / (document.body.clientHeight - window.innerHeight)) * 100);
-
-    if (percentScrolled.toFixed(0) >= 3) {
-      setScrollVisibility("visible");
-      setPercentText(percentScrolled.toFixed(1) + " %");
-    } else {
-      setScrollVisibility("hidden");
-    }
+    setPercentText(percentScrolled.toFixed(1) + " %");
   };
 
   useEffect(() => {
@@ -28,7 +21,7 @@ function Scroll() {
 
   return (
     <div id="scroll-line" style={{ width: percentScrolled + "%" }}>
-      <span style={{ visibility: scrollVisibility }}>{percentageText}</span>
+      <span>{percentageText}</span>
     </div>
   );
 }
