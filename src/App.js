@@ -3,12 +3,6 @@ import "./App.css";
 
 function App() {
   const ul = useRef();
-  // const [ arrayOfLi, setArrayOfLi ] = useState([]);
-
-  //---------------- update arrayOfLi when a change happen in list of users -----------
-  // function arrayUpdater() {
-  //   setArrayOfLi([...ul.current.querySelectorAll("li")]);
-  // }
 
   //------------ loading list of users with a smooth fading animation ------------------
   function loadingAnimation() {
@@ -53,14 +47,13 @@ function App() {
           deleterSpan.innerText = "X";
           deleterSpan.addEventListener("click", () => {
             if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
-              const arrayOfLi = [ ...ul.current.querySelectorAll("li") ];
-              
+              const arrayOfLi = [...ul.current.querySelectorAll("li")];
+
               for (const eachLi of arrayOfLi) {
                 if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
                   arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
                 }
               }
-              
             }
           });
           li.appendChild(deleterSpan);
