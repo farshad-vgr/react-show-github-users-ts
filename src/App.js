@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import "./App.css";
 
-function App() {
+function App({ value }) {
   const ul = useRef();
 
   //------------ loading list of users with a smooth fading animation ------------------
@@ -11,7 +11,7 @@ function App() {
     for (let i = 0; i < items.length; ++i) {
       setTimeout(() => {
         items[i].classList.add("fadein");
-      }, i * 1000);
+      }, i * 250);
     }
   }
 
@@ -111,6 +111,17 @@ function App() {
       ul.current.removeEventListener("dragover", dragOverHandler);
     };
   }, []);
+
+  useEffect(() => {
+    const arrayOfLi = [...ul.current.querySelectorAll("li")];
+    arrayOfLi.forEach((li) => {
+      if (li.querySelector("h3").innerText.toLowerCase().includes(value)) {
+        li.style.display = "block";
+      } else {
+        li.style.display = "none";
+      }
+    });
+  }, [value]);
 
   return (
     <section className="container">

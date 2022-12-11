@@ -104,11 +104,11 @@ section ul li .delete-icon:hover {
 /* ------------animation part----------- */
 .fade-item {
   opacity: 0;
-  transition: 1s all ease-in-out;
+  transition: 0.25s all ease-in-out;
 }
 
 .fadein {
-  animation: fadeIn 1s 1;
+  animation: fadeIn 0.25s 1;
   animation-fill-mode: forwards;
 }
 
