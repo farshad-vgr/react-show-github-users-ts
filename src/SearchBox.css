@@ -1,0 +1,34 @@
+.searchbox-form {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 auto;
+    padding-top: 2rem;
+    background-color: gray;
+}
+
+.searchbox-form input[type="text"] {
+    padding: 0.5rem;
+    width: 15rem;
+    height: 2rem;
+    font-size: 1.5rem;
+    border: 1px dashed black;
+    border-right: none;
+    border-radius: 0.5rem 0 0 0.5rem;
+    outline: none;
+    cursor: text;
+}
+
+.searchbox-form input[type="submit"] {
+    width: 5rem;
+    height:2rem;
+    font-size: 1rem;
+    border: 1px dashed black;
+    border-left: none;
+    border-radius: 0 0.5rem 0.5rem 0;
+    outline: none;
+    cursor: pointer;
+}
+.searchbox-form input[type="submit"]:hover {
+    filter: brightness(0.9);
+}
