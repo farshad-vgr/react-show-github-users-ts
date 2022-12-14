@@ -120,3 +120,12 @@ section ul li .delete-icon:hover {
     opacity: 1;
   }
 }
+
+.no-item {
+  margin: 1rem 0;
+  padding: 1rem 2rem;
+  font-size: 2rem;
+  color: orange;
+  border: 2px dashed orangered;
+  border-radius: 1rem;
+}

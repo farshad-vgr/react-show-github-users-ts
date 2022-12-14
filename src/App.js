@@ -1,8 +1,11 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { myContext } from "./index";
 import "./App.css";
 
-function App({ value }) {
+function App() {
   const ul = useRef();
+  let [hiddenItems, setHiddenItems] = useState(0);
+  const value = useContext(myContext);
 
   //------------ loading list of users with a smooth fading animation ------------------
   function loadingAnimation() {
@@ -113,12 +116,14 @@ function App({ value }) {
   }, []);
 
   useEffect(() => {
+    setHiddenItems(0);
     const arrayOfLi = [...ul.current.querySelectorAll("li")];
     arrayOfLi.forEach((li) => {
       if (li.querySelector("h3").innerText.toLowerCase().includes(value)) {
         li.style.display = "block";
       } else {
         li.style.display = "none";
+        setHiddenItems((prevHiddenItems) => prevHiddenItems + 1);
       }
     });
   }, [value]);
@@ -126,6 +131,7 @@ function App({ value }) {
   return (
     <section className="container">
       <ul ref={ul} id="my-ul"></ul>
+      {hiddenItems === 30 ? <div className="no-item"><h1>No Items Found!</h1></div> : null}
     </section>
   );
 }
