@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import propTypes from "prop-types";
 import "./SearchBox.css";
 
 const SearchBox = ({ formSubmitHandler }) => {
@@ -26,6 +27,10 @@ const SearchBox = ({ formSubmitHandler }) => {
       </form>
     </div>
   );
+};
+
+SearchBox.prototype = {
+  formSubmitHandler: propTypes.func.isRequired
 };
 
 export default SearchBox;

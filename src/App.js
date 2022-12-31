@@ -1,8 +1,8 @@
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import { myContext } from "./index";
 import "./App.css";
 
-function App() {
+const App = () => {
   const ul = useRef();
   let [hiddenItems, setHiddenItems] = useState(0);
   const value = useContext(myContext);
@@ -115,7 +115,7 @@ function App() {
     };
   }, []);
 
-  useEffect(() => {
+  useLayoutEffect(() => {
     setHiddenItems(0);
     const arrayOfLi = [...ul.current.querySelectorAll("li")];
     arrayOfLi.forEach((li) => {
@@ -131,7 +131,11 @@ function App() {
   return (
     <section className="container">
       <ul ref={ul} id="my-ul"></ul>
-      {hiddenItems === 30 ? <div className="no-item"><h1>No Items Found!</h1></div> : null}
+      {hiddenItems === 30 && (
+        <div className="no-item">
+          <h1>No Items Found!</h1>
+        </div>
+      )}
     </section>
   );
 }
