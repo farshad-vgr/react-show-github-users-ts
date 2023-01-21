@@ -9,7 +9,6 @@ section ul {
   padding: 20px;
   width: 100%;
   list-style: none;
-  background-color: gray;
 }
 
 section ul li {
@@ -18,9 +17,10 @@ section ul li {
   height: 120px;
   margin: 10px auto;
   padding: 10px 10px;
-  border: 1px solid whitesmoke;
+  box-shadow: 0 0 10px lightgray;
   border-radius: 5px 30px 30px 30px;
-  background-color: lightgray;
+    background: linear-gradient(135deg, rgb(207, 207, 207) 0%, rgb(196, 248, 254) 50%, rgb(215, 215, 215) 100%);
+
   overflow: hidden;
 }
 section ul li.dragging {
@@ -92,13 +92,12 @@ section ul li .delete-icon {
   font-size: 14px;
   font-weight: bold;
   color: red;
-  background-color: whitesmoke;
-  border-radius: 0 0 0 30px;
   cursor: pointer;
   transition: 0.3s ease-in-out;
 }
 section ul li .delete-icon:hover {
   background-color: lightgray;
+  border-radius: 0 0 0 30px;
 }
 
 /* ------------animation part----------- */

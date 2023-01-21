@@ -1,4 +1,6 @@
 import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import axios from "axios";
+
 import { myContext } from "./index";
 import "./App.css";
 
@@ -18,65 +20,64 @@ const App = () => {
     }
   }
 
-  //-------------------- loading user by AJAX request ---------------------
-  function loadUsers() {
-    const xhr = new XMLHttpRequest();
+  //-------------------- loading users by Axios request ---------------------
+  async function loadUsers() {
+    try {
+      const response = await axios.get("https://api.github.com/users");
+      const users = response.data;
 
-    xhr.open("GET", "https://api.github.com/users");
+      for (const user of users) {
+        const li = document.createElement("li");
+        li.classList.add("card", "fade-item");
+        li.setAttribute("draggable", "true");
+        li.innerHTML = `
+                <div>
+                  <img src="${user.avatar_url}" draggable="false">
+                    <section>
+                      <h3>Name: ${user.login}</h3>
+                      <a href="${user.html_url}" target="_blank" draggable="false">Visit profile on Github!</a>
+                      <span>Followers: ${Math.ceil(Math.random() * user.login.length)}K</span>
+                    </section>
+                    <article><b>About user:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</article>
+                  </div>
+                `;
 
-    xhr.onload = function () {
-      if (xhr.status == 200) {
-        const users = JSON.parse(xhr.responseText);
+        const deleterSpan = document.createElement("span");
+        deleterSpan.setAttribute("title", "Delete user!");
+        deleterSpan.setAttribute("class", "delete-icon");
+        deleterSpan.innerText = "X";
+        deleterSpan.addEventListener("click", () => {
+          if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
+            const arrayOfLi = [...ul.current.querySelectorAll("li")];
 
-        for (const user of users) {
-          const li = document.createElement("li");
-          li.classList.add("card", "fade-item");
-          li.setAttribute("draggable", "true");
-          li.innerHTML = `
-          <div>
-            <img src="${user.avatar_url}" draggable="false">
-              <section>
-                <h3>Name: ${user.login}</h3>
-                <a href="${user.html_url}" target="_blank" draggable="false">Visit profile on Github!</a>
-                <span>Followers: ${Math.ceil(Math.random() * user.login.length)}K</span>
-              </section>
-              <article><b>About user:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.</article>
-            </div>
-          `;
-
-          const deleterSpan = document.createElement("span");
-          deleterSpan.setAttribute("title", "Delete user!");
-          deleterSpan.setAttribute("class", "delete-icon");
-          deleterSpan.innerText = "X";
-          deleterSpan.addEventListener("click", () => {
-            if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
-              const arrayOfLi = [...ul.current.querySelectorAll("li")];
-
-              for (const eachLi of arrayOfLi) {
-                if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
-                  arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
-                }
+            for (const eachLi of arrayOfLi) {
+              if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
+                arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
               }
             }
-          });
-          li.appendChild(deleterSpan);
+          }
+        });
+        li.appendChild(deleterSpan);
 
-          li.addEventListener("dragstart", () => {
-            li.classList.add("dragging");
-          });
+        li.addEventListener("dragstart", () => {
+          li.classList.add("dragging");
+        });
 
-          li.addEventListener("dragend", () => {
-            li.classList.remove("dragging");
-          });
+        li.addEventListener("dragend", () => {
+          li.classList.remove("dragging");
+        });
 
-          ul.current.append(li);
+        ul.current.append(li);
 
-          loadingAnimation();
-        }
+        loadingAnimation();
       }
-    };
-
-    xhr.send();
+    } catch (error) {
+      alert(`
+        Error:
+        ${error}
+        Please refresh this page again!
+      `);
+    }
   }
 
   //--------------- drag and drop listener -----------------------
@@ -138,6 +139,6 @@ const App = () => {
       )}
     </section>
   );
-}
+};
 
 export default App;

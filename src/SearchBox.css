@@ -4,7 +4,6 @@
     align-items: center;
     margin: 0 auto;
     padding-top: 2rem;
-    background-color: gray;
 }
 
 .searchbox-form input[type="text"] {
@@ -17,6 +16,7 @@
     border-radius: 0.5rem 0 0 0.5rem;
     outline: none;
     cursor: text;
+    box-shadow: 5px 5px 10px lightgray;
 }
 
 .searchbox-form input[type="submit"] {
@@ -28,6 +28,7 @@
     border-radius: 0 0.5rem 0.5rem 0;
     outline: none;
     cursor: pointer;
+    box-shadow: 5px 5px 10px lightgray;
 }
 .searchbox-form input[type="submit"]:hover {
     filter: brightness(0.9);
