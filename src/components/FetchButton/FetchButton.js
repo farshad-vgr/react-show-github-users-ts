@@ -10,8 +10,11 @@ const FetchButton = ({ loadUsers, requestNumber }) => {
 		<>
 			<button
 				id="fetch-btn"
-				onClick={() => {
+				onClick={(e) => {
 					loadUsers();
+					e.currentTarget.disabled = true;
+					e.currentTarget.style.pointerEvents = "none";
+					e.currentTarget.style.userSelect = "none";
 					ref.current.focus();
 				}}>
 				<svg
