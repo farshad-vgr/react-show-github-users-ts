@@ -8,7 +8,7 @@ import "./App.css";
 
 const App = () => {
 	const ul = useRef();
-	const numberOfUsers = useRef(50);
+	const numberOfUsers = useRef(10); // If not set default value is 30
 	let [hiddenItems, setHiddenItems] = useState(0);
 	const [requestNumber, setRequestNumber] = useState(60);
 	const { userName } = useContext(myContext);
@@ -30,6 +30,7 @@ const App = () => {
 			const response = await axios.get(`https://api.github.com/users?per_page=${numberOfUsers.current}`);
 			const users = response.data;
 
+			// Determining how many requests remains
 			setRequestNumber(response.headers["x-ratelimit-remaining"]);
 
 			for (const user of users) {
@@ -62,10 +63,10 @@ const App = () => {
         `;
 				deleterSpan.addEventListener("click", () => {
 					if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
-						const arrayOfLi = [...ul.current.querySelectorAll("li")];
+            const arrayOfLi = [ ...ul.current.querySelectorAll("li") ];
 
 						for (const eachLi of arrayOfLi) {
-							if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
+							if (eachLi.querySelector("h3").innerText === `${user.login}`) {
 								arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
 							}
 						}
