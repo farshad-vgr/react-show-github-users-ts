@@ -1,36 +1,37 @@
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useCallback, useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
 import axios from "axios";
 
 import { myContext } from "./index";
+
 import "./App.css";
 
 const App = () => {
-  const ul = useRef();
-  let [hiddenItems, setHiddenItems] = useState(0);
-  const value = useContext(myContext);
+	const ul = useRef();
+	let [hiddenItems, setHiddenItems] = useState(0);
+	const value = useContext(myContext);
 
-  //------------ loading list of users with a smooth fading animation ------------------
-  function loadingAnimation() {
-    const items = document.getElementsByClassName("fade-item");
+	//------------ loading list of users with a smooth fading animation ------------------
+	function loadingAnimation() {
+		const items = document.getElementsByClassName("fade-item");
 
-    for (let i = 0; i < items.length; ++i) {
-      setTimeout(() => {
-        items[i].classList.add("fadein");
-      }, i * 250);
-    }
-  }
+		for (let i = 0; i < items.length; ++i) {
+			setTimeout(() => {
+				items[i].classList.add("fadein");
+			}, i * 250);
+		}
+	}
 
-  //-------------------- loading users by Axios request ---------------------
-  async function loadUsers() {
-    try {
-      const response = await axios.get("https://api.github.com/users");
-      const users = response.data;
+	//-------------------- loading users by Axios request ---------------------
+	const loadUsers = useCallback(async () => {
+		try {
+			const response = await axios.get("https://api.github.com/users");
+			const users = response.data;
 
-      for (const user of users) {
-        const li = document.createElement("li");
-        li.classList.add("card", "fade-item");
-        li.setAttribute("draggable", "true");
-        li.innerHTML = `
+			for (const user of users) {
+				const li = document.createElement("li");
+				li.classList.add("card", "fade-item");
+				li.setAttribute("draggable", "true");
+				li.innerHTML = `
                 <div>
                   <img src="${user.avatar_url}" draggable="false">
                     <section>
@@ -42,103 +43,105 @@ const App = () => {
                   </div>
                 `;
 
-        const deleterSpan = document.createElement("span");
-        deleterSpan.setAttribute("title", "Delete user!");
-        deleterSpan.setAttribute("class", "delete-icon");
-        deleterSpan.innerText = "X";
-        deleterSpan.addEventListener("click", () => {
-          if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
-            const arrayOfLi = [...ul.current.querySelectorAll("li")];
+				const deleterSpan = document.createElement("span");
+				deleterSpan.setAttribute("title", "Delete user!");
+				deleterSpan.setAttribute("class", "delete-icon");
+				deleterSpan.innerText = "X";
+				deleterSpan.addEventListener("click", () => {
+					if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
+						const arrayOfLi = [...ul.current.querySelectorAll("li")];
 
-            for (const eachLi of arrayOfLi) {
-              if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
-                arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
-              }
-            }
-          }
-        });
-        li.appendChild(deleterSpan);
+						for (const eachLi of arrayOfLi) {
+							if (eachLi.querySelector("h3").innerText === `Name: ${user.login}`) {
+								arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
+							}
+						}
+					}
+				});
+				li.appendChild(deleterSpan);
 
-        li.addEventListener("dragstart", () => {
-          li.classList.add("dragging");
-        });
+				li.addEventListener("dragstart", () => {
+					li.classList.add("dragging");
+				});
 
-        li.addEventListener("dragend", () => {
-          li.classList.remove("dragging");
-        });
+				li.addEventListener("dragend", () => {
+					li.classList.remove("dragging");
+				});
 
-        ul.current.append(li);
+				ul.current.append(li);
 
-        loadingAnimation();
-      }
-    } catch (error) {
-      alert(`
+				loadingAnimation();
+			}
+		} catch (error) {
+			alert(`
         Error:
         ${error}
         Please refresh this page again!
       `);
-    }
-  }
+		}
+	}, []);
 
-  //--------------- drag and drop listener -----------------------
-  function dragEnterHandler(e) {
-    if (e.target.classList.contains("card") && !e.target.classList.contains("dragging")) {
-      const draggingCard = document.querySelector(".dragging");
-      const cards = [...ul.current.querySelectorAll("li")];
-      const currentPosition = cards.indexOf(draggingCard);
-      const newPosition = cards.indexOf(e.target);
+	//--------------- drag and drop listener -----------------------
+	function dragEnterHandler(e) {
+		if (e.target.classList.contains("card") && !e.target.classList.contains("dragging")) {
+			const draggingCard = document.querySelector(".dragging");
+			const cards = [...ul.current.querySelectorAll("li")];
+			const currentPosition = cards.indexOf(draggingCard);
+			const newPosition = cards.indexOf(e.target);
 
-      if (currentPosition > newPosition) {
-        ul.current.insertBefore(draggingCard, e.target);
-      } else {
-        ul.current.insertBefore(draggingCard, e.target.nextSibling);
-      }
-    }
-  }
+			if (currentPosition > newPosition) {
+				ul.current.insertBefore(draggingCard, e.target);
+			} else {
+				ul.current.insertBefore(draggingCard, e.target.nextSibling);
+			}
+		}
+	}
 
-  //------------ change mouse icon when drag and drop happed -----------------------
-  function dragOverHandler(e) {
-    e.preventDefault();
-  }
+	//------------ change mouse icon when drag and drop happed -----------------------
+	function dragOverHandler(e) {
+		e.preventDefault();
+	}
 
-  useEffect(() => {
-    loadUsers();
+	useEffect(() => {
+		const currentUl = ul.current;
 
-    function eventListeners() {
-      ul.current.addEventListener("dragenter", (e) => dragEnterHandler(e));
-      ul.current.addEventListener("dragover", (e) => dragOverHandler(e));
-    }
-    eventListeners();
+		loadUsers();
 
-    return () => {
-      ul.current.removeEventListener("dragenter", dragEnterHandler);
-      ul.current.removeEventListener("dragover", dragOverHandler);
-    };
-  }, []);
+		function eventListeners() {
+			currentUl.addEventListener("dragenter", (e) => dragEnterHandler(e));
+			currentUl.addEventListener("dragover", (e) => dragOverHandler(e));
+		}
+		eventListeners();
 
-  useLayoutEffect(() => {
-    setHiddenItems(0);
-    const arrayOfLi = [...ul.current.querySelectorAll("li")];
-    arrayOfLi.forEach((li) => {
-      if (li.querySelector("h3").innerText.toLowerCase().includes(value)) {
-        li.style.display = "block";
-      } else {
-        li.style.display = "none";
-        setHiddenItems((prevHiddenItems) => prevHiddenItems + 1);
-      }
-    });
-  }, [value]);
+		return () => {
+			currentUl.removeEventListener("dragenter", dragEnterHandler);
+			currentUl.removeEventListener("dragover", dragOverHandler);
+		};
+	}, [loadUsers]);
 
-  return (
-    <section className="container">
-      <ul ref={ul} id="my-ul"></ul>
-      {hiddenItems === 30 && (
-        <div className="no-item">
-          <h1>No Items Found!</h1>
-        </div>
-      )}
-    </section>
-  );
+	useLayoutEffect(() => {
+		setHiddenItems(0);
+		const arrayOfLi = [...ul.current.querySelectorAll("li")];
+		arrayOfLi.forEach((li) => {
+			if (li.querySelector("h3").innerText.toLowerCase().includes(value)) {
+				li.style.display = "block";
+			} else {
+				li.style.display = "none";
+				setHiddenItems((prevHiddenItems) => prevHiddenItems + 1);
+			}
+		});
+	}, [value]);
+
+	return (
+		<section className="container">
+			<ul ref={ul} id="my-ul"></ul>
+			{hiddenItems === 30 && (
+				<div className="no-item">
+					<h1>No Items Found!</h1>
+				</div>
+			)}
+		</section>
+	);
 };
 
 export default App;

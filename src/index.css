@@ -1,10 +1,22 @@
+@font-face {
+	font-family: "Neon";
+	src: url("./assets/fonts/TiltNeon-Regular-VariableFont.ttf");
+}
+
+:root {
+	--bg-light-red: rgb(255, 227, 222);
+	--bg-light-yellow: rgb(255, 253, 189);
+	--bg-light-green: rgb(206, 255, 163);
+}
+
 * {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  cursor: default;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	cursor: default;
 }
 
 body {
-    background: linear-gradient(0deg, rgb(255, 227, 222) 0%, rgb(255, 253, 189) 80%, rgb(206, 255, 163) 100%);
+	font-family: "Neon";
+	background: linear-gradient(0deg, var(--bg-light-red) 0%, var(--bg-light-yellow) 80%, var(--bg-light-green) 100%);
 }
