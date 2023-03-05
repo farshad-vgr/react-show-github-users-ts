@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import propTypes from "prop-types";
 
 import { myContext } from "../../index";
 
@@ -31,10 +30,6 @@ const SearchBox = () => {
       </form>
     </section>
   );
-};
-
-SearchBox.prototype = {
-  formSubmitHandler: propTypes.func.isRequired
 };
 
 export default SearchBox;
