@@ -1,9 +1,19 @@
+import { useContext } from "react";
+import { myContext } from "../../index";
+
 import "./FetchButton.css";
 
 const FetchButton = ({ loadUsers, requestNumber }) => {
+	const { ref } = useContext(myContext);
+
 	return (
 		<>
-			<button id="fetch-btn" onClick={loadUsers}>
+			<button
+				id="fetch-btn"
+				onClick={() => {
+					loadUsers();
+					ref.current.focus();
+				}}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"
 					fill="none"

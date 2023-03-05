@@ -1,4 +1,4 @@
-import React, { Suspense, useState, createContext } from "react";
+import React, { Suspense, useState, useRef, createContext } from "react";
 import ReactDOM from "react-dom/client";
 
 import { Loading, Scroll, SearchBox } from "./components";
@@ -10,7 +10,8 @@ const App = React.lazy(() => import("./App"));
 export const myContext = createContext();
 
 const ComponentCombiner = () => {
-	const [userName, setUserName] = useState("");
+  const [ userName, setUserName ] = useState("");
+  const ref = useRef(null);
 
 	const formSubmitHandler = (e, v) => {
 		e.preventDefault();
@@ -18,9 +19,9 @@ const ComponentCombiner = () => {
 	};
 
 	return (
-		<myContext.Provider value={{ userName, formSubmitHandler }}>
+		<myContext.Provider value={{ userName, formSubmitHandler, ref }}>
 			<Scroll />
-			<SearchBox />
+			<SearchBox ref={ref} />
 			<Suspense fallback={<Loading />}>
 				<App />
 			</Suspense>
