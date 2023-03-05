@@ -17,6 +17,16 @@
 }
 
 body {
-	font-family: "Neon";
+  width: 100vw;
+  min-height: 100vh;
+	font-family: "Neon", sans-serif;
 	background: linear-gradient(0deg, var(--bg-light-red) 0%, var(--bg-light-yellow) 80%, var(--bg-light-green) 100%);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  overflow-x: hidden;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }

@@ -1,0 +1,26 @@
+#fetch-btn {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 0 auto;
+	margin-top: 1rem;
+	padding: 0.25rem 0.5rem;
+	font-size: 1.5rem;
+	font-family: "Neon", sans-serif;
+  border: 1px dashed black;
+	border-radius: 0.5rem;
+	outline: none;
+	box-shadow: 0.25rem 0.25rem 0.5rem lightgray;
+  transition: all 0.2s ease-in-out;
+	cursor: pointer;
+}
+#fetch-btn:hover {
+  box-shadow: 0 0 0.5rem 0.25rem gray;
+}
+#fetch-btn:hover svg {
+  color: deepskyblue;
+}
+
+#fetch-btn svg {
+	margin-right: 0.5rem;
+}

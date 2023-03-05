@@ -6,7 +6,7 @@ const SearchBox = ({ formSubmitHandler }) => {
   const [searchValue, setSearchValue] = useState("");
 
   return (
-    <div>
+    <section>
       <form
         className="searchbox-form"
         onSubmit={(e) => {
@@ -25,7 +25,7 @@ const SearchBox = ({ formSubmitHandler }) => {
           }}></input>
         <input type={"submit"} value="Search"></input>
       </form>
-    </div>
+    </section>
   );
 };
 

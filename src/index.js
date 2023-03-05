@@ -1,4 +1,4 @@
-import React, { Suspense, useState, createContext, useCallback } from "react";
+import React, { Suspense, useState, createContext } from "react";
 import ReactDOM from "react-dom/client";
 
 import { Loading, Scroll, SearchBox } from "./components";
@@ -12,10 +12,10 @@ export const myContext = createContext();
 const ComponentCombiner = () => {
   const [userName, setUserName] = useState("");
 
-  const formSubmitHandler = useCallback((e, v) => {
-    e.preventDefault();
-    setUserName(v.trim());
-  },[]);
+  const formSubmitHandler = (e, v) => {
+		e.preventDefault();
+		setUserName(v.trim());
+	};
 
   return (
     <myContext.Provider value={userName}>

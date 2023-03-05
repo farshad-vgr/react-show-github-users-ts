@@ -2,17 +2,20 @@
   position: fixed;
   top: 0;
   left: 0;
-  height: 10px;
-  z-index: 1;
+  height: 0.85rem;
   background-color: deepskyblue;
+  z-index: 10;
 }
 
 #scroll-line span {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   float: right;
-  padding: 0 3px;
-  min-width: 30px;
-  height: 10px;
-  font-size: 10px;
+  padding: 0 0.25rem;
+  min-width: 3rem;
+  height: 0.85rem;
+  font-size: 0.75rem;
   color: whitesmoke;
   background-color: dodgerblue;
 }
