@@ -8,28 +8,29 @@ import "./App.css";
 
 const App = () => {
 	const ul = useRef();
-  let [ hiddenItems, setHiddenItems ] = useState(0);
-  const [ requestNumber, setRequestNumber ] = useState(60);
+	const numberOfUsers = useRef(50);
+	let [hiddenItems, setHiddenItems] = useState(0);
+	const [requestNumber, setRequestNumber] = useState(60);
 	const { userName } = useContext(myContext);
 
-	//------------ loading list of users with a smooth fading animation ------------------
+	// This function handles loading a list of users with a smooth-fading animation(adds a specific class to all items)
 	function loadingAnimation() {
-		const items = document.getElementsByClassName("fade-item");
+		const allItems = document.getElementsByClassName("fade-item");
 
-		for (let i = 0; i < items.length; ++i) {
+		for (let i = 0; i < numberOfUsers.current; ++i) {
 			setTimeout(() => {
-				items[i].classList.add("fadein");
+				allItems[i].classList.add("fadein");
 			}, i * 250);
 		}
 	}
 
-	//-------------------- loading users by Axios request ---------------------
+	// This function handles loading users by the Axios request
 	const loadUsers = useCallback(async () => {
 		try {
-			const response = await axios.get("https://api.github.com/users?per_page=50");
-      const users = response.data;
-      
-      setRequestNumber(response.headers["x-ratelimit-remaining"]);
+			const response = await axios.get(`https://api.github.com/users?per_page=${numberOfUsers.current}`);
+			const users = response.data;
+
+			setRequestNumber(response.headers["x-ratelimit-remaining"]);
 
 			for (const user of users) {
 				const li = document.createElement("li");
@@ -54,7 +55,7 @@ const App = () => {
 
 				const deleterSpan = document.createElement("span");
 				deleterSpan.setAttribute("class", "delete-icon");
-        deleterSpan.innerHTML = `
+				deleterSpan.innerHTML = `
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="cursor-pointer">
             <path class="cursor-pointer" stroke-linecap="round" stroke-linejoin="round" d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
           </svg>
@@ -70,9 +71,9 @@ const App = () => {
 						}
 					}
 				});
-        li.appendChild(deleterSpan);
-        
-        const starSection = document.createElement("div");
+				li.appendChild(deleterSpan);
+
+				const starSection = document.createElement("div");
 				starSection.setAttribute("title", "Stars");
 				starSection.setAttribute("class", "star-section");
 				starSection.innerHTML = `
@@ -81,7 +82,7 @@ const App = () => {
           </svg>
           <span>${Math.ceil(Math.random() * 90)}</span>
         `;
-        li.appendChild(starSection);
+				li.appendChild(starSection);
 
 				li.addEventListener("dragstart", () => {
 					li.classList.add("dragging");
@@ -104,7 +105,7 @@ const App = () => {
 		}
 	}, []);
 
-	//--------------- drag and drop listener -----------------------
+	// This function handles drag and drop event
 	function dragEnterHandler(e) {
 		if (e.target.classList.contains("card") && !e.target.classList.contains("dragging")) {
 			const draggingCard = document.querySelector(".dragging");
@@ -120,11 +121,12 @@ const App = () => {
 		}
 	}
 
-	//------------ change mouse icon when drag and drop happed -----------------------
+	// This function changes the mouse icon when drag and drop happens
 	function dragOverHandler(e) {
 		e.preventDefault();
 	}
 
+	// This hook manages drag and drop on itmes
 	useEffect(() => {
 		const currentUl = ul.current;
 
@@ -140,9 +142,12 @@ const App = () => {
 		};
 	}, [loadUsers]);
 
+	// This hook manages search to show or hide users
 	useLayoutEffect(() => {
 		setHiddenItems(0);
+
 		const arrayOfLi = [...ul.current.querySelectorAll("li")];
+
 		arrayOfLi.forEach((li) => {
 			if (li.querySelector("h3").innerText.toLowerCase().includes(userName)) {
 				li.style.display = "block";
@@ -159,9 +164,9 @@ const App = () => {
 
 			<ul ref={ul} id="my-ul"></ul>
 
-			{hiddenItems === 30 && (
+			{hiddenItems === numberOfUsers.current && (
 				<div className="no-item">
-					<h1>No Items Found!</h1>
+					<h1>No Item Found !</h1>
 				</div>
 			)}
 		</section>
