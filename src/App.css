@@ -121,6 +121,20 @@ section ul li .delete-icon:hover {
 	height: 1rem;
 }
 
+.no-item {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 1rem 0;
+	padding: 1rem 2rem;
+	width: 40%;
+	font-size: 2rem;
+	color: orange;
+	border: 2px dashed orangered;
+	border-radius: 1rem;
+	user-select: none;
+}
+
 /* ------------ Animation Section ----------- */
 .fade-item {
 	opacity: 0;
@@ -139,13 +153,4 @@ section ul li .delete-icon:hover {
 	100% {
 		opacity: 1;
 	}
-}
-
-.no-item {
-	margin: 1rem 0;
-	padding: 1rem 2rem;
-	font-size: 2rem;
-	color: orange;
-	border: 2px dashed orangered;
-	border-radius: 1rem;
 }
