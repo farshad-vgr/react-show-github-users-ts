@@ -2,8 +2,8 @@ import { useState, useEffect, memo } from "react";
 import "./Scroll.css";
 
 const Scroll = () => {
-	const [percentScrolled, setPercentScrolled] = useState((window.scrollY / (document.body.clientHeight - window.innerHeight)) * 100);
-	const [percentageText, setPercentText] = useState(percentScrolled.toFixed(1) + " %");
+	const [percentScrolled, setPercentScrolled] = useState(0);
+	const [percentageText, setPercentText] = useState(0);
 
 	useEffect(() => {
 		const scrollHandler = () => {
