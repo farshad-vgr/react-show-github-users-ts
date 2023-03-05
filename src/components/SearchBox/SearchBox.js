@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import propTypes from "prop-types";
+
+import { myContext } from "../../index";
+
 import "./SearchBox.css";
 
-const SearchBox = ({ formSubmitHandler }) => {
-  const [searchValue, setSearchValue] = useState("");
+const SearchBox = () => {
+  const [ searchValue, setSearchValue ] = useState("");
+  const { formSubmitHandler } = useContext(myContext);
 
   return (
     <section>

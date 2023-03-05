@@ -10,7 +10,7 @@ const App = () => {
 	const ul = useRef();
   let [ hiddenItems, setHiddenItems ] = useState(0);
   const [ requestNumber, setRequestNumber ] = useState(60);
-	const value = useContext(myContext);
+	const { userName } = useContext(myContext);
 
 	//------------ loading list of users with a smooth fading animation ------------------
 	function loadingAnimation() {
@@ -144,14 +144,14 @@ const App = () => {
 		setHiddenItems(0);
 		const arrayOfLi = [...ul.current.querySelectorAll("li")];
 		arrayOfLi.forEach((li) => {
-			if (li.querySelector("h3").innerText.toLowerCase().includes(value)) {
+			if (li.querySelector("h3").innerText.toLowerCase().includes(userName)) {
 				li.style.display = "block";
 			} else {
 				li.style.display = "none";
 				setHiddenItems((prevHiddenItems) => prevHiddenItems + 1);
 			}
 		});
-	}, [value]);
+	}, [userName]);
 
 	return (
 		<section className="container">
