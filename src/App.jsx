@@ -69,7 +69,7 @@ const App = () => {
 
 	return (
 		<section className="container">
-			<FetchButton loadUsers={loadUsers} requestNumber={requestNumber} />
+			<FetchButton loadUsers={loadUsers} requestNumber={requestNumber} page={1} />
 
 			{isLoading && <Loading />}
 

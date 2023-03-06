@@ -3,7 +3,7 @@ import { myContext } from "../../index";
 
 import "./FetchButton.css";
 
-const FetchButton = ({ loadUsers, requestNumber }) => {
+const FetchButton = ({ loadUsers, requestNumber, page }) => {
 	const { ref } = useContext(myContext);
 
 	return (
@@ -11,7 +11,7 @@ const FetchButton = ({ loadUsers, requestNumber }) => {
 			<button
 				id="fetch-btn"
 				onClick={(e) => {
-					loadUsers(1);
+					loadUsers(page);
 					e.currentTarget.disabled = true;
 					e.currentTarget.style.pointerEvents = "none";
 					e.currentTarget.style.userSelect = "none";
