@@ -19,11 +19,11 @@ const useAxios = (ul, numberOfUsers) => {
 	}, [numberOfUsers]);
 
 	// This function handles loading users by the Axios request
-	const loadUsers = useCallback(async () => {
+	const loadUsers = useCallback(async (page) => {
 		try {
 			setIsLoading(true);
 
-			const result = await axios.get(`https://api.github.com/users?per_page=${numberOfUsers.current}`);
+			const result = await axios.get(`https://api.github.com/users?since=${(page + 1) * 10}&per_page=${numberOfUsers.current}`);
 
 			setResponse(result.data);
       

@@ -11,7 +11,7 @@ const FetchButton = ({ loadUsers, requestNumber }) => {
 			<button
 				id="fetch-btn"
 				onClick={(e) => {
-					loadUsers();
+					loadUsers(1);
 					e.currentTarget.disabled = true;
 					e.currentTarget.style.pointerEvents = "none";
 					e.currentTarget.style.userSelect = "none";
