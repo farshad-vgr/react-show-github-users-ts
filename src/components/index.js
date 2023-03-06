@@ -7,6 +7,7 @@ you can easily import it using the named import in a single line from "./compone
 */
 
 export { default as Loading } from "./Loading/Loading";
+export { default as NotFound } from "./NotFound/NotFound";
 export { default as Scroll } from "./Scroll/Scroll";
 export { default as SearchBox } from "./SearchBox/SearchBox";
 export { default as FetchButton } from "./FetchButton/FetchButton";

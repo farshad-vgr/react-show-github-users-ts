@@ -1,0 +1,13 @@
+.not-found {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 1rem 0;
+	padding: 1rem 2rem;
+	width: 40%;
+	font-size: 2rem;
+	color: orange;
+	border: 2px dashed orangered;
+	border-radius: 1rem;
+	user-select: none;
+}
