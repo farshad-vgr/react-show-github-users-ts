@@ -21,7 +21,6 @@ section ul li {
 	border-radius: 0.25rem 2rem 2rem 3rem;
 	background: linear-gradient(135deg, rgb(207, 207, 207) 0%, rgb(196, 248, 254) 50%, rgb(215, 215, 215) 100%);
 	overflow: hidden;
-	transition: all 2s !important;
 }
 section ul li.dragging {
 	opacity: 0.5 !important;
