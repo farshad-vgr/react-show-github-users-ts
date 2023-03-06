@@ -1,18 +1,32 @@
-import { useContext, useEffect, useLayoutEffect, useRef, useState } from "react";
-
+import { useContext, useEffect, useLayoutEffect, useRef, useState, useCallback } from "react";
 
 import { myContext } from "./index";
-import { FetchButton, Loading, NotFound } from "./components";
-
+import { FetchButton, Loading, NotFound, UserItem } from "./components";
 import useAxios from "./hooks/useAxios";
+
 import "./App.css";
 
 const App = () => {
-	const ul = useRef();
-	const numberOfUsers = useRef(10); // A number between 10 to 100
-	const [hiddenItems, setHiddenItems] = useState(0); // If all items are hidden show a message("no-item-found")
-	const { userName } = useContext(myContext);
-	const { loadUsers, requestNumber, isLoading } = useAxios(ul, numberOfUsers); // Custom hook
+	const ul = useRef(); // Main "ul" element as container for "li" items
+	
+	const numberOfUsers = useRef(10); // How many user to show(between 10 to 100)
+	
+	const [ hiddenItems, setHiddenItems ] = useState(0); // If all items are hidden, then show a message("no-item-found")
+	
+	const { userName } = useContext(myContext); // Search input value
+	
+	const { loadUsers, requestNumber, response, isLoading } = useAxios(numberOfUsers); // Custom hook
+
+	// This function handles loading effect for a list of users with a smooth-fading animation(adds a specific class to all list items)
+	const loadingAnimation = useCallback(() => {
+		const allItems = document.getElementsByClassName("fade-item");
+
+		for (let i = 0; i < numberOfUsers.current; ++i) {
+			setTimeout(() => {
+				allItems[i].classList.add("fadein");
+			}, i * 250);
+		}
+	}, [numberOfUsers]);
 
 	// This function handles drag and drop event
 	function dragEnterHandler(e) {
@@ -73,7 +87,10 @@ const App = () => {
 
 			{isLoading && <Loading />}
 
-			<ul ref={ul}></ul>
+			<ul ref={ul}>
+				{response && response.map((user) => <UserItem key={user.id} user={user} ul={ul} />)}
+				{response && loadingAnimation()}
+			</ul>
 
 			{hiddenItems === numberOfUsers.current && <NotFound />}
 		</section>

@@ -11,3 +11,4 @@ export { default as NotFound } from "./NotFound/NotFound";
 export { default as Scroll } from "./Scroll/Scroll";
 export { default as SearchBox } from "./SearchBox/SearchBox";
 export { default as FetchButton } from "./FetchButton/FetchButton";
+export { default as UserItem } from "./UserItem/UserItem";
