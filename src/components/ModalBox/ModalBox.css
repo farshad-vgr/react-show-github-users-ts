@@ -1,0 +1,52 @@
+.modal-backdrop {
+	position: fixed;
+	top: 0; right: 0; bottom: 0; left: 0;
+  background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(0.25rem);
+}
+
+.modal-box {
+	position: absolute;
+	top: 20%;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	padding: 1rem;
+	width: 80%;
+	border-radius: 1rem;
+	border: 1px dashed black;
+	background-color: whitesmoke;
+}
+
+.modal-btn {
+	position: absolute;
+	top: 0.25rem;
+	right: 0.25rem;
+	width: 1.5rem;
+	height: 1.5rem;
+	border: none;
+	color: red;
+	background-color: transparent;
+	cursor: pointer;
+}
+
+.modal-title {
+	padding-bottom: 0.5rem;
+	letter-spacing: 0.125rem;
+	font-family: "Acme", cursive;
+	font-size: 2rem;
+	border-bottom: 1px dashed black;
+	color: gray;
+}
+
+.modal-body {
+	margin-top: 1rem;
+}
+
+#modal-message {
+	font-size: 3rem;
+	font-weight: bold;
+	color: red;
+}

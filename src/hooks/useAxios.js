@@ -2,7 +2,7 @@ import { useState, useCallback } from "react";
 import axios from "axios";
 
 const useAxios = (numberOfUsers) => {
-	const [requestNumber, setRequestNumber] = useState(60); // Max number of requests is 60
+	const [requestNumber, setRequestNumber] = useState("?"); // Max number of requests is 60
 	
 	const [ response, setResponse ] = useState(null);
 	
@@ -25,7 +25,7 @@ const useAxios = (numberOfUsers) => {
 			} catch (error) {
 				setError(error);
 
-				alert(`
+				console.log(`
 		    Error:
 		    ${error}
 		    Please refresh this page again!

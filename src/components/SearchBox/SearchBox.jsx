@@ -6,15 +6,17 @@ import "./SearchBox.css";
 
 const SearchBox = forwardRef((props, ref) => {
 	const [searchValue, setSearchValue] = useState("");
-	const { formSubmitHandler } = useContext(myContext);
+	const { formSubmitHandler, setShowModal, findUser } = useContext(myContext);
 
 	return (
 		<section>
 			<form
 				className="searchbox-form"
 				onSubmit={(e) => {
-					formSubmitHandler(e, searchValue);
+					e.preventDefault();
 					setSearchValue("");
+					setShowModal(true);
+					findUser(searchValue);
 				}}>
 				<input
 					ref={ref}
