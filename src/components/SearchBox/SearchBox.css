@@ -23,7 +23,7 @@
 .searchbox-form input[type="submit"] {
 	width: 5rem;
 	height: 2rem;
-	font-size: 1rem;
+	font-size: 1.25rem;
 	font-family: "Neon", sans-serif;
 	border: 1px dashed black;
 	border-left: none;

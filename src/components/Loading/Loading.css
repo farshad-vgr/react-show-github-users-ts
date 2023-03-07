@@ -4,11 +4,9 @@
 	justify-content: space-around;
 	align-items: center;
 	position: absolute;
-	top: 20%;
+	top: 30%;
 	left: 50%;
 	transform: translateX(-50%);
-	width: 30%;
-	height: 30%;
 }
 
 .loader {
@@ -22,15 +20,15 @@
 	content: "";
 	box-sizing: border-box;
 	position: absolute;
-	inset: 0px;
-	border: 5px solid orangered;
+	inset: 0rem;
+	border: 0.5rem solid orangered;
 	border-radius: 50%;
 	animation: prixClipFix 2s linear infinite;
 }
 .loader::after {
 	border-color: orange;
 	animation: prixClipFix 2s linear infinite, rotate 0.5s linear infinite reverse;
-	inset: 6px;
+	inset: 0.75rem;
 }
 
 @keyframes rotate {
