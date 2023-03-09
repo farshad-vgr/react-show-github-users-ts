@@ -1,10 +1,10 @@
-import React, { useState, useContext, forwardRef } from "react";
+import React, { useState, useContext, forwardRef, memo } from "react";
 
 import { myContext } from "../../index";
 
 import "./SearchBox.css";
 
-const SearchBox = forwardRef((props, ref) => {
+const SearchBox = forwardRef((_props, ref: React.Ref<HTMLInputElement>) => {
 	const [searchValue, setSearchValue] = useState("");
 	const { formSubmitHandler, setShowModal, findUser } = useContext(myContext);
 
@@ -24,7 +24,7 @@ const SearchBox = forwardRef((props, ref) => {
 					maxLength={15}
 					value={searchValue}
 					onInput={(e) => {
-						setSearchValue(e.target.value);
+						setSearchValue((e.target as HTMLInputElement).value);
 					}}
 					onChange={(e) => {
 						formSubmitHandler(e, e.target.value);
@@ -35,4 +35,4 @@ const SearchBox = forwardRef((props, ref) => {
 	);
 });
 
-export default SearchBox;
+export default memo(SearchBox);

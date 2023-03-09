@@ -3,7 +3,7 @@ import "./Scroll.css";
 
 const Scroll = () => {
 	const [percentScrolled, setPercentScrolled] = useState(0);
-	const [percentageText, setPercentText] = useState(0);
+	const [percentageText, setPercentText] = useState("0 %");
 
 	useEffect(() => {
 		const scrollHandler = () => {

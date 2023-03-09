@@ -1,9 +1,16 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+
 import { myContext } from "../../index";
 
 import "./FetchButton.css";
 
-const FetchButton = ({ loadUsers, requestNumber, page }) => {
+interface Props {
+	loadUsers: (page: number) => Promise<void>;
+	requestNumber: string | undefined;
+	page: number;
+}
+
+const FetchButton = ({ loadUsers, requestNumber, page }: Props) => {
 	const { ref } = useContext(myContext);
 
 	return (
@@ -15,7 +22,9 @@ const FetchButton = ({ loadUsers, requestNumber, page }) => {
 					e.currentTarget.disabled = true;
 					e.currentTarget.style.pointerEvents = "none";
 					e.currentTarget.style.userSelect = "none";
-					ref.current.focus();
+					if (ref.current) {
+						(ref.current as HTMLElement).focus();
+					}
 				}}>
 				<svg
 					xmlns="http://www.w3.org/2000/svg"

@@ -1,18 +1,18 @@
 import { useState, useCallback } from "react";
 import axios from "axios";
 
-const useAxios = (numberOfUsers) => {
-	const [requestNumber, setRequestNumber] = useState("?"); // Max number of requests is 60
-	
-	const [ response, setResponse ] = useState(null);
-	
-	const [ error, setError ] = useState("");
-	
-	const [ isLoading, setIsLoading ] = useState(false);
+const useAxios = (numberOfUsers: React.MutableRefObject<number>) => {
+	const [requestNumber, setRequestNumber] = useState<string>("?"); // Max number of requests is 60
+
+	const [response, setResponse] = useState();
+
+	const [error, setError] = useState<string>("");
+
+	const [isLoading, setIsLoading] = useState(false);
 
 	// This function handles loading users by the Axios request
 	const loadUsers = useCallback(
-		async (page) => {
+		async (page: number) => {
 			try {
 				setIsLoading(true);
 
@@ -21,8 +21,8 @@ const useAxios = (numberOfUsers) => {
 				setResponse(result.data);
 
 				// Determining how many requests remains
-				setRequestNumber(result.headers["x-ratelimit-remaining"]);
-			} catch (error) {
+				setRequestNumber(result.headers["x-ratelimit-remaining"] as string);
+			} catch (error: any) {
 				setError(error);
 
 				console.log(`

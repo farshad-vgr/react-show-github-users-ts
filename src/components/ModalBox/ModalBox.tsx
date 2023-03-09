@@ -4,7 +4,13 @@ import { myContext } from "../../index";
 
 import "./ModalBox.css";
 
-const ModalBox = ({ onClose, title, children }) => {
+interface Props {
+	onClose: () => void;
+	title: string;
+	children: JSX.Element;
+}
+
+const ModalBox = ({ onClose, title, children }: Props) => {
 	const { ref, setHiddenItems } = useContext(myContext);
 
 	return (
@@ -12,9 +18,9 @@ const ModalBox = ({ onClose, title, children }) => {
 			<div
 				className="modal-backdrop"
 				onClick={(e) => {
-					if (e.target === e.currentTarget) {
+					if (e.target === e.currentTarget && ref.current) {
 						onClose();
-						ref.current.focus();
+						(ref.current as HTMLInputElement).focus();
 						setHiddenItems(0);
 					}
 				}}>
@@ -23,7 +29,9 @@ const ModalBox = ({ onClose, title, children }) => {
 						className="modal-btn cursor-pointer"
 						onClick={() => {
 							onClose();
-							ref.current.focus();
+							if (ref.current) {
+								(ref.current as HTMLInputElement).focus();
+							}
 							setHiddenItems(0);
 						}}>
 						<svg

@@ -8,14 +8,36 @@ import "./index.css";
 
 const App = React.lazy(() => import("./App"));
 
-export const myContext = createContext();
+interface MyContext {
+	numberOfUsers: React.MutableRefObject<number>;
+	hiddenItems: number;
+	setHiddenItems: (a: number | ((b: number) => number)) => void;
+	userName: string;
+	formSubmitHandler: (e: React.ChangeEvent<HTMLInputElement>, v: string) => void;
+	ref: React.MutableRefObject<null>;
+	setShowModal: (b: boolean) => void;
+	findUser: (str: string) => void;
+	response: {} | null;
+}
+
+export const myContext = createContext<MyContext>({
+	numberOfUsers: {current: 0},
+	hiddenItems: 0,
+	setHiddenItems: () => {},
+	userName: "",
+	formSubmitHandler: () => {},
+	ref: {current: null},
+	setShowModal: () => {},
+	findUser: () => {},
+	response: {},
+});
 
 const ComponentCombiner = () => {
-	const [ userName, setUserName ] = useState("");
+	const [ userName, setUserName ] = useState<string>("");
 	
 	const ref = useRef(null);
 
-	const numberOfUsers = useRef(10); // How many user to show(between 10 to 100)
+	const numberOfUsers = useRef<number>(10); // How many user to show(between 10 to 100)
 
 	const [hiddenItems, setHiddenItems] = useState(0); // If all items are hidden, then show a message("no-item-found")
 
@@ -24,7 +46,7 @@ const ComponentCombiner = () => {
 
 	const { findUser, response } = useFindUser();
 
-	const formSubmitHandler = (e, v) => {
+	const formSubmitHandler = (e: React.ChangeEvent<HTMLInputElement>, v: string) => {
 		e.preventDefault();
 		setUserName(v.trim());
 	};
@@ -48,5 +70,5 @@ const ComponentCombiner = () => {
 	);
 };
 
-const root = ReactDOM.createRoot(document.getElementById("root"));
+const root = ReactDOM.createRoot(document.getElementById("root") as HTMLDivElement);
 root.render(<ComponentCombiner />);

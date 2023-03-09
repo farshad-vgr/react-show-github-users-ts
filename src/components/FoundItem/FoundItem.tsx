@@ -1,41 +1,24 @@
-import { memo, useEffect, useRef } from "react";
+import { memo } from "react";
 
-import "../UserItem/UserItem.css";
+import "./FoundItem.css";
 
-const UserItem = ({ user, ul }) => {
-	const mainLi = useRef();
-	const deleterSpan = useRef();
+interface Props {
+	response: {
+		avatar_url: string;
+		login: string;
+		html_url: string;
+	};
+}
 
-	useEffect(() => {
-		mainLi.current.addEventListener("dragstart", () => {
-			mainLi.current.classList.add("dragging");
-		});
-
-		mainLi.current.addEventListener("dragend", () => {
-			mainLi.current.classList.remove("dragging");
-		});
-
-		deleterSpan.current.addEventListener("click", () => {
-			if (window.confirm(`Are you sure you want to delete "${user.login}" from list??`)) {
-				const arrayOfLi = [...ul.current.querySelectorAll("li")];
-
-				for (const eachLi of arrayOfLi) {
-					if (eachLi.querySelector("h3").innerText === `${user.login}`) {
-						arrayOfLi[arrayOfLi.indexOf(eachLi)].style.display = "none";
-					}
-				}
-			}
-		});
-	});
-
+const FoundItem = ({ response }: Props) => {
 	return (
 		<>
-			<li ref={mainLi} className="card fade-item" draggable={true}>
+			<li id="found-item" className="card fade-item fadein">
 				<div>
-					<img src={user.avatar_url} draggable="false" alt="User"></img>
+					<img src={response.avatar_url} alt="User"></img>
 					<section>
-						<h3>{user.login}</h3>
-						<a href={user.html_url} target="_blank" rel="noreferrer" draggable="false">
+						<h3>{response.login}</h3>
+						<a href={response.html_url} target="_blank" rel="noreferrer">
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
 								fill="none"
@@ -54,24 +37,13 @@ const UserItem = ({ user, ul }) => {
 							</svg>
 							Profile on Github
 						</a>
-						<span>Followers: {Math.ceil(Math.random() * user.login.length)}K</span>
+						<span>Followers: {Math.ceil(Math.random() * response.login.length)}K</span>
 					</section>
 					<article>
 						<b>About user:</b> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard
 						dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
 					</article>
 				</div>
-
-				<span ref={deleterSpan} className="delete-icon">
-					<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor" className="cursor-pointer">
-						<path
-							className="cursor-pointer"
-							strokeLinecap="round"
-							strokeLinejoin="round"
-							d="M9.75 9.75l4.5 4.5m0-4.5l-4.5 4.5M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
-						/>
-					</svg>
-				</span>
 
 				<div className="star-section" title="Stars">
 					<svg xmlns="http://www.w3.org/2000/svg" fill="gold" viewBox="0 0 24 24" strokeWidth="2" stroke="currentColor">
@@ -88,4 +60,4 @@ const UserItem = ({ user, ul }) => {
 	);
 };
 
-export default memo(UserItem);
+export default memo(FoundItem);

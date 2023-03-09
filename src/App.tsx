@@ -6,8 +6,15 @@ import useAxios from "./hooks/useAxios";
 
 import "./App.css";
 
+interface Response {
+	id: number;
+	login: string;
+	avatar_url: string;
+	html_url: string;
+}
+
 const App = () => {
-	const ul = useRef(); // Main "ul" element as container for "li" items
+	const ul = useRef<HTMLUListElement | null>(null); // Main "ul" element as container for "li" items
 
 	const { numberOfUsers, hiddenItems, setHiddenItems, userName } = useContext(myContext); // Search input value
 
@@ -25,39 +32,39 @@ const App = () => {
 	}, [numberOfUsers]);
 
 	// This function handles drag and drop event
-	function dragEnterHandler(e) {
-		if (e.target.classList.contains("card") && !e.target.classList.contains("dragging")) {
-			const draggingCard = document.querySelector(".dragging");
-			const cards = [...ul.current.querySelectorAll("li")];
+	function dragEnterHandler(e: DragEvent) {
+		if ((e.target as HTMLElement).classList.contains("card") && !(e.target as HTMLElement).classList.contains("dragging")) {
+			const draggingCard = document.querySelector(".dragging") as HTMLLIElement;
+			const cards = [...(ul.current as Element).querySelectorAll("li")];
 			const currentPosition = cards.indexOf(draggingCard);
-			const newPosition = cards.indexOf(e.target);
+			const newPosition = cards.indexOf(e.target as HTMLLIElement);
 
 			if (currentPosition > newPosition) {
-				ul.current.insertBefore(draggingCard, e.target);
+				(ul.current as Element).insertBefore(draggingCard, e.target as Element);
 			} else {
-				ul.current.insertBefore(draggingCard, e.target.nextSibling);
+				(ul.current as Element).insertBefore(draggingCard, (e.target as HTMLElement).nextSibling);
 			}
 		}
 	}
 
 	// This function changes the mouse icon when drag and drop happens
-	function dragOverHandler(e) {
+	function dragOverHandler(e: DragEvent) {
 		e.preventDefault();
 	}
 
 	// This hook manages drag and drop on itmes
 	useEffect(() => {
-		const currentUl = ul.current;
+		const currentUl: HTMLUListElement | null = ul.current;
 
 		function eventListeners() {
-			currentUl.addEventListener("dragenter", (e) => dragEnterHandler(e));
-			currentUl.addEventListener("dragover", (e) => dragOverHandler(e));
+			currentUl?.addEventListener("dragenter", (e) => dragEnterHandler(e));
+			currentUl?.addEventListener("dragover", (e) => dragOverHandler(e));
 		}
 		eventListeners();
 
 		return () => {
-			currentUl.removeEventListener("dragenter", dragEnterHandler);
-			currentUl.removeEventListener("dragover", dragOverHandler);
+			currentUl?.removeEventListener("dragenter", (e) => dragEnterHandler(e));
+			currentUl?.removeEventListener("dragover", (e) => dragOverHandler(e));
 		};
 	}, [loadUsers]);
 
@@ -65,10 +72,10 @@ const App = () => {
 	useLayoutEffect(() => {
 		setHiddenItems(0);
 
-		const arrayOfLi = [...ul.current.querySelectorAll("li")];
+		const arrayOfLi = [...(ul.current as Element).querySelectorAll("li")];
 
 		arrayOfLi.forEach((li) => {
-			if (li.querySelector("h3").innerText.toLowerCase().includes(userName)) {
+			if (li.querySelector("h3")?.innerText.toLowerCase().includes(userName)) {
 				li.style.display = "block";
 			} else {
 				li.style.display = "none";
@@ -84,7 +91,7 @@ const App = () => {
 			{isLoading && <Loading />}
 
 			<ul ref={ul}>
-				{response && response.map((user) => <UserItem key={user.id} user={user} ul={ul} />)}
+				{response && (response as Array<Response>).map((user) => <UserItem key={user.id} user={user} ul={ul} />)}
 				{response && loadingAnimation()}
 			</ul>
 

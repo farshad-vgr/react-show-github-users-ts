@@ -9,7 +9,7 @@ const useFindUser = () => {
 	const [isLoading, setIsLoading] = useState(false);
 
 	// This function handles loading users by the Axios request
-	const findUser = async (name) => {
+	const findUser = async (name: string) => {
 		try {
 			setResponse(null); // Set to default value
 			setError(""); // Set to default value
@@ -18,7 +18,7 @@ const useFindUser = () => {
 			const result = await axios.get(`https://api.github.com/users/${name}`);
 
 			setResponse(result.data);
-		} catch (error) {
+		} catch (error: any) {
 			setError(error);
 
 			console.log(`
