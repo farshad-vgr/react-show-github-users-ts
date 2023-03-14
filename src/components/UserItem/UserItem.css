@@ -1,6 +1,7 @@
 li {
 	position: relative;
-	width: 70%;
+	min-width: 60rem;
+	max-width: 70rem;
 	height: 7rem;
 	margin: 1rem auto;
 	padding: 0.5rem 0.5rem;

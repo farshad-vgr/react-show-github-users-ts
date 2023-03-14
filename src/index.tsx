@@ -1,7 +1,7 @@
-import React, { Suspense, useState, useRef, createContext } from "react";
+import React, { Suspense, useState, useRef, createContext, useEffect } from "react";
 import ReactDOM from "react-dom/client";
 
-import { Loading, Scroll, SearchBox, ModalBox, FoundItem } from "./components";
+import { Loading, Scroll, SearchBox, ModalBox, FoundItem, JoyRideTour } from "./components";
 import useFindUser from "./hooks/useFindUser";
 
 import "./index.css";
@@ -33,8 +33,8 @@ export const myContext = createContext<MyContext>({
 });
 
 const ComponentCombiner = () => {
-	const [ userName, setUserName ] = useState<string>("");
-	
+	const [userName, setUserName] = useState<string>("");
+
 	const ref = useRef(null);
 
 	const numberOfUsers = useRef<number>(10); // How many user to show(between 10 to 100)
@@ -51,6 +51,21 @@ const ComponentCombiner = () => {
 		setUserName(v.trim());
 	};
 
+	// This hook checks if this is the first time shown tour to the user or not
+	useEffect(() => {
+		if (!localStorage.getItem("showGithubUsersTour")) {
+			document.body.addEventListener(
+				"click",
+				() => {
+					localStorage.setItem("showGithubUsersTour", "true");
+				},
+				{ once: true },
+			);
+
+			return () => document.body.removeEventListener("click", () => localStorage.setItem("showGithubUsersTour", "true"));
+		}
+	}, []);
+
 	return (
 		<myContext.Provider value={{ numberOfUsers, hiddenItems, setHiddenItems, userName, formSubmitHandler, ref, setShowModal, findUser, response }}>
 			<Scroll />
@@ -60,6 +75,8 @@ const ComponentCombiner = () => {
 			<Suspense fallback={<Loading />}>
 				<App />
 			</Suspense>
+
+			{!localStorage.getItem("showGithubUsersTour") && <JoyRideTour />}
 
 			{showModal && (
 				<ModalBox onClose={() => setShowModal(false)} title="Search Result :">

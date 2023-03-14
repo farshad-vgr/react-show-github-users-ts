@@ -14,3 +14,4 @@ export { default as FetchButton } from "./FetchButton/FetchButton";
 export { default as UserItem } from "./UserItem/UserItem";
 export { default as FoundItem } from "./FoundItem/FoundItem";
 export { default as ModalBox } from "./ModalBox/ModalBox";
+export { default as JoyRideTour } from "./JoyRideTour/JoyRideTour";

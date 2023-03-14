@@ -11,7 +11,7 @@ const SearchBox = forwardRef((_props, ref: React.Ref<HTMLInputElement>) => {
 	return (
 		<section>
 			<form
-				className="searchbox-form"
+				className="searchbox-form tour-search-input"
 				onSubmit={(e) => {
 					e.preventDefault();
 					setSearchValue("");

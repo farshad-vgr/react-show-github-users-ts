@@ -17,6 +17,7 @@ const FetchButton = ({ loadUsers, requestNumber, page }: Props) => {
 		<>
 			<button
 				id="fetch-btn"
+				className="tour-fetch-button"
 				onClick={(e) => {
 					loadUsers(page);
 					e.currentTarget.disabled = true;
