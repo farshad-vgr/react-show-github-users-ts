@@ -33,6 +33,10 @@
   <a href="https://www.w3schools.com/css/" target="_blank" title="CSS3">
     <img src="https://raw.githubusercontent.com/devicons/devicon/master/icons/css3/css3-original-wordmark.svg" alt="CSS3" width="40" height="40"/>
   </a>
+  
+  <a href="https://docs.github.com/en/rest/users?apiVersion=2022-11-28" target="_blank" title="GitHub API">
+    <img src="https://docs.github.com/assets/cb-803/images/site/favicon.svg" alt="GitHub API" width="40" height="40"/>
+  </a>
 </p>
 
 ### * Screenshot:
