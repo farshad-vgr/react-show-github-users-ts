@@ -24,7 +24,7 @@ body {
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;
-  overflow-x: hidden;
+	overflow-x: hidden !important;
 }
 
 .cursor-pointer {
